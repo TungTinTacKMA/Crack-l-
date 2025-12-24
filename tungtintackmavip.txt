@@ -1,6 +1,6 @@
-#!name = Vip Pro Max (GitHub Version)
-#!desc = Phiên bản vĩnh viễn chạy trên GitHub của TungTinTacKMA
-#!author = Gemini Modified
+#!name = Vip Pro Max (GitHub TungTinTacKMA)
+#!desc = Phiên bản vĩnh viễn từ kho GitHub Crack-l-
+#!author = TungTinTacKMA
 
 [Rule]
 AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECT
