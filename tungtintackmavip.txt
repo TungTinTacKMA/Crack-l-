@@ -1,8 +1,6 @@
-#!name = All In One Vip Ngrok
-#!desc = Phiên bản chạy qua Ngrok Server cá nhân
-#!author = Modified by Gemini
-
-#Shadowrocket Unlock nhiều app vip
+#!name = Vip Pro Max (GitHub Version)
+#!desc = Phiên bản vĩnh viễn chạy trên GitHub của TungTinTacKMA
+#!author = Gemini Modified
 
 [Rule]
 AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECT
@@ -24,56 +22,32 @@ http-request ^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:4
 
 [Script]
 
-#Sub-Store (Đã tắt vì không có file)
-#Sub-Store Core=type=http-request,pattern=^https?:\/\/sub\.store\/((download)|api\/(preview|sync|(utils\/node-info))),script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/sub-store-1.min.js,requires-body=true,timeout=120
-#Sub-Store Simple=type=http-request,pattern=^https?:\/\/sub\.store,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/sub-store-0.min.js,requires-body=true
-#Sub-Store Sync=type=cron,cronexp=0 0 * * *,wake-system=1,timeout=120,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/cron-sync-artifacts.min.js
+# === YouTube Premium ===
+youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine=jsc,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/youtube.response.js
+youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/youtube.response.js,argument="{"lyricLang":"vi","captionLang":"vi","blockUpload":true,"blockImmersive":true,"debug":false}"
 
-#YouTube Premium
-youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine=jsc,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/youtube.response.js
-youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/youtube.response.js,argument="{"lyricLang":"vi","captionLang":"vi","blockUpload":true,"blockImmersive":true,"debug":false}"
+# === Spotify (App2Smile) ===
+spotify-json = type=http-request,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/,requires-body=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/spotify-json.js
+spotify-proto = type=http-response,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/spotify-proto.js,script-update-interval=0
 
-# ===== Spotify iOS15 (app2smile) =====
-#!name=Spotify(iOS15)
-#!desc=部分解锁premium,建议重新登录,音质不能设置为超高
-# 1. 搜索界面 歌单/歌曲可以随意切换完全播放
-# 2. 音乐库已点赞歌曲随意切换完全播放
+# === SoundCloud ===
+SoundCloudGo+=type=http-response,pattern=https://api-mobile.soundcloud.com/configuration/ios,requires-body=1,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/SoundCloudGoPlus.js
 
-spotify-json = type=http-request,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/,requires-body=0,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/spotify-json.js
+# === Alight Motion ===
+AlightMotion = type=http-response,pattern=^https:\/\/us-central1-alight-creative\.cloudfunctions\.net\/getAccountStatusAndLicenses,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/AlightMotion.js
 
-spotify-proto = type=http-response,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/spotify-proto.js,script-update-interval=0
+# === PicsArt ===
+PicsArt = type=http-request,pattern=^https:\/\/api\.picsart\.com\/gw-v2\/shop\/subscription\/apple\/purchases,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/PicsArt.js,requires-body=true,timeout=60
 
-#SoundCloud
-SoundCloudGo+=type=http-response,pattern=https://api-mobile.soundcloud.com/configuration/ios,requires-body=1,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/SoundCloudGoPlus.js
+# === Truecaller ===
+Truecaller = type=http-response,pattern=^https://premium-(.+)\.truecaller\.com/v\d/(subscriptions|products\/apple),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/TrueCaller.js
 
-#AlightMotion
-AlightMotion = type=http-response,pattern=^https:\/\/us-central1-alight-creative\.cloudfunctions\.net\/getAccountStatusAndLicenses,requires-body=true,max-size=131072,timeout=10,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/AlightMotion.js
-
-#PicsArt
-PicsArt = type=http-request,pattern=^https:\/\/api\.picsart\.com\/gw-v2\/shop\/subscription\/apple\/purchases,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/PicsArt.js,requires-body=true,timeout=60
-
-#Wink (Đã tắt vì không có file)
-#Wink =type=http-response,pattern=^https?:\/\/api-sub\.meitu\.com\/v2\/user\/vip_info_by_group\.json,requires-body=1,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/WinkVipCrack.js
-
-#Truecaller
-Truecaller = type=http-response,pattern=^https://premium-(.+)\.truecaller\.com/v\d/(subscriptions|products\/apple),requires-body=1,max-size=0,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/TrueCaller.js
-
-#Kinemaster (Đã tắt vì không có file)
-#Kinemaster = type=http-response,pattern=^https:\/\/api-account\.kinemasters\.com\/v\d\/user\/subscribe$,requires-body=1,max-size=0,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/Kinemaster.js
-
-#CamScanner (Đã tắt vì không có file)
-#Camscanner = type=http-response,pattern=https:\/\/(api|api-cs.*)\.intsig\.net\/purchase\/cs\/query_prop,requires-body=1,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/camScanner.js
-
-#BeautyPlus (Đã tắt vì không có file)
-#BeautyPlus = type=http-response,pattern=https:\/\/(api\.mr\.pixocial\.com\/v1\/manual_unlock|newbeee-api\.beautyplus\.com\/api\/v1\/asset\/balance),requires-body=true,max-size=-1,timeout=60,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/BeautyPlus.js
-
-#Locket
-revenuecat = type=http-response,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$),requires-body=true,max-size=-1,timeout=60,script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/Locket_DuyVinh09.js
-deleteHeader = 
-type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers),script-path=https://tribunitial-intermembral-hermina.ngrok-free.dev/deleteHeader.js,timeout=60
+# === Locket Gold ===
+revenuecat = type=http-response,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/Locket_DuyVinh09.js
+deleteHeader = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers),script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/deleteHeader.js,timeout=60
 
 [Map Local]
 ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data="" status-code=200
 
 [MITM]
-hostname = %APPEND%, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, -redirector*.googlevideo.com, premium*.truecaller.com, sub.store, api.revenuecat.com, api-mobile.soundcloud.com, api.picsart.com, us-central1-alight-creative.cloudfunctions.net, api-sub.meitu.com, api-account.kinemasters.com, ap*.intsig.net, api.mr.pixocial.com, newbeee-api.beautyplus.com, spclient.wg.spotify.com, *spclient.spotify.com
+hostname = %APPEND%, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, -redirector*.googlevideo.com, premium*.truecaller.com, api.revenuecat.com, api-mobile.soundcloud.com, api.picsart.com, us-central1-alight-creative.cloudfunctions.net, spclient.wg.spotify.com, *spclient.spotify.com
