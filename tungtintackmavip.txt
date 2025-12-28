@@ -55,7 +55,7 @@ deleteHeader = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(r
 
 [MITM]
 enable = true
-# Dấu sao (*) nghĩa là BẮT TẤT CẢ mọi trang web (Mạnh nhất)
-hostname = *
+hostname = *.facebook.com, *.google.com, *.youtube.com, accounts.google.com
+
 
 
