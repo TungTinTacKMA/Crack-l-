@@ -52,6 +52,7 @@ Truecaller = type=http-response,pattern=^https://premium-(.+)\.truecaller\.com/v
 [MITM]
 enable = true
 # Danh sách giải mã HTTPS cho các App Premium
-hostname = *.revenuecat.com, api.revenuecat.com, *.picsart.com, *.alightcreative.com, *.truecaller.com, *.spotify.com, *.google.com, *.youtube.com
+hostname = *.revenuecat.com, api.revenuecat.com, *.picsart.com, *.alightcreative.com, *.truecaller.com, *.spotify.com, *.google.com, *.youtube.com, *.dsrcgoms.net, *.hit.club, *.wsmt8g.cc
+
 
 
