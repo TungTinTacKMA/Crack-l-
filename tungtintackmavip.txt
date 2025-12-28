@@ -55,8 +55,8 @@ deleteHeader = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(r
 
 [MITM]
 enable = true
-# Dấu sao (*) trước hit.club sẽ bắt gọn: v.hit.club, play.hit.club, m.hit.club...
-hostname = hit.club, *.hit.club, *.facebook.com, *.google.com, *.youtube.com
+# Danh sách "Bắt trọn ổ" (Đã bao gồm các API ngầm của HitClub)
+hostname = hit.club, *.hit.club, *.wsmt8g.cc, *.trakipsg.net, *.genesockezlyfeapy.com, *.dsrcgoms.net, *.geightdors.net, *.hytsocesk.com, *.facebook.com, *.google.com, *.youtube.com
 
 
 
