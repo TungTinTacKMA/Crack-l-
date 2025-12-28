@@ -1,17 +1,15 @@
-/*
-  DEBUG VERSION: Kiểm tra kết nối Discord
-  File: smart_spy.js
+/* DEBUG SCRIPT: KIỂM TRA PHẢN HỒI TỪ DISCORD 
+   File: smart_spy.js
 */
 
 var request = $request;
 var url = request.url;
 
-// --- QUAN TRỌNG: THAY LINK WEBHOOK MỚI CỦA BẠN VÀO ĐÂY ---
-var webhookUrl = "https://discord.com/api/webhooks/THAY_LINK_WEBHOOK_MOI_O_DAY";
+// --- DÁN LINK WEBHOOK MỚI CỦA BẠN VÀO DƯỚI ---
+var webhookUrl = "https://discordapp.com/api/webhooks/1454906156777472165/tLAGpqP0YKRK0HjgzhHat-CTb3s6OMiFrPqzse_KZ8NfD16FsgXiNmKbqxyqyaKPX1ST";
 
 var payload = {
-    "username": "Test Bot",
-    "content": "✅ **KẾT NỐI THÀNH CÔNG!**\nShadowrocket đã bắt được request từ:\n`" + url + "`"
+    "content": "🚨 **TEST KẾT NỐI:** Shadowrocket đã bắt được request!\nTarget: `" + url + "`"
 };
 
 $httpClient.post({
@@ -19,10 +17,18 @@ $httpClient.post({
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
 }, function(error, response, data) {
+    
+    // LOG CHI TIẾT ĐỂ BẮT LỖI
     if (error) {
-        console.log("Lỗi gửi Discord: " + error);
+        console.log("❌ LỖI MẠNG: " + error);
     } else {
-        console.log("Đã gửi log thành công!");
+        // Kiểm tra xem Discord có chấp nhận không (Status phải là 204 hoặc 200)
+        if (response.status == 204 || response.status == 200) {
+            console.log("✅ GỬI THÀNH CÔNG! (Kiểm tra Discord ngay)");
+        } else {
+            console.log("⚠️ DISCORD TỪ CHỐI! Mã lỗi: " + response.status);
+            console.log("Phản hồi từ Discord: " + data); // In ra lý do tại sao lỗi
+        }
     }
     $done({});
 });
