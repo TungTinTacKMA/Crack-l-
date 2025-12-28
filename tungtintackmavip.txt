@@ -55,7 +55,9 @@ deleteHeader = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(r
 
 [MITM]
 enable = true
-hostname = *.facebook.com, *.google.com, *.youtube.com, accounts.google.com
+# Thêm hit.club và dấu * đằng trước để bắt cả v.hit.club, play.hit.club...
+hostname = *.hit.club, hit.club, *.facebook.com, *.google.com
+
 
 
 
