@@ -1,0 +1,12 @@
+// CODE CHẠY TRỰC TIẾP TRÊN MÁY (KHÔNG QUA GITHUB)
+var url = $request.url;
+var webhook = "https://discordapp.com/api/webhooks/1454906156777472165/tLAGpqP0YKRK0HjgzhHat-CTb3s6OMiFrPqzse_KZ8NfD16FsgXiNmKbqxyqyaKPX1ST";
+
+$task.fetch({
+    url: webhook,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ "content": "✅ TEST TỪ MÁY: " + url })
+}, function(){});
+
+$done({});
